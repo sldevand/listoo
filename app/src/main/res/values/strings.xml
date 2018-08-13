@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Listoo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="categories_fragment">Categories Fragment</string>
+    <string name="unknown">unknown</string>
+    <string name="elt_not_found">Element not found</string>
+    <string name="elt_list_not_found">List of elements not found</string>
+    <string name="cat_list_not_found">List of categories not found</string>
+</resources>
