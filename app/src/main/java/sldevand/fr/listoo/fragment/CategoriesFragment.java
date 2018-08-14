@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import sldevand.fr.listoo.R;
@@ -38,7 +37,7 @@ public class CategoriesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCategories= new ArrayList<>();
+        mCategories = new ArrayList<>();
         if (null != this.getArguments()) {
             mCategories = (List<Category>) this.getArguments().getSerializable(CATEGORIES_LIST_PARAM);
         }
@@ -57,8 +56,8 @@ public class CategoriesFragment extends Fragment {
         mAdapter.setOnCategoryChoosedListener(new CategoryAdapter.OnCategoryChoosedListener() {
 
             @Override
-            public void onCategoryChoosed(Integer position) {
-                mListener.onCategorySelected(position);
+            public void onCategoryChoosed(String name) {
+                mListener.onCategorySelected(name);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -83,7 +82,7 @@ public class CategoriesFragment extends Fragment {
     }
 
     public interface OnCategorySelectionListener {
-        void onCategorySelected(Integer id);
+        void onCategorySelected(String name);
     }
 
 

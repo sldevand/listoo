@@ -45,7 +45,7 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHold
     }
 
     public interface OnElementChoosedListener {
-        void onChoosed(Integer position);
+        void onChoosed(String name);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,9 +57,9 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHold
             super(v);
 
             v.setOnClickListener((view) -> {
-                Integer id = mDataset.get(getAdapterPosition()).getId();
+                String name = mDataset.get(getAdapterPosition()).getName();
                 if (null != onElementChoosedListener)
-                    onElementChoosedListener.onChoosed(id);
+                    onElementChoosedListener.onChoosed(name);
             });
 
             mImageView = v.findViewById(R.id.element_image);

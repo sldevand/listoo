@@ -5,11 +5,18 @@
     android:layout_height="match_parent"
     tools:context="sldevand.fr.listoo.fragment.CategoriesFragment">
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/categories_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/categories_add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:src="@android:drawable/ic_input_add"  />
 </FrameLayout>

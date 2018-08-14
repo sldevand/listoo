@@ -1,68 +1,56 @@
 package sldevand.fr.listoo;
 
-import android.content.Context;
-import android.database.SQLException;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
-import sldevand.fr.listoo.dao.CategoryDao;
-import sldevand.fr.listoo.exception.DbException;
+import io.realm.Realm;
 import sldevand.fr.listoo.model.Category;
+import sldevand.fr.listoo.model.Element;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CategoryDaoTest {
-    private static CategoryDao dao;
+
+
+    private static Realm realm;
+
 
     @BeforeClass
     public static void beforeClass() {
+        realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.commitTransaction();
+    }
 
-        Context appContext = InstrumentationRegistry.getTargetContext();
-        dao = CategoryDao.getInstance(appContext);
+
+    @Test
+    public void stage1_insertOne() {
+        Category equides = new Category("equides", "Quatre pattes longue criniere");
+
+        realm.beginTransaction();
+        realm.insert(new Element("cheval", equides, "Quatre pattes longue criniere, hennit"));
+        realm.commitTransaction();
+
+        assertNotNull(equides);
+
 
     }
 
     @Test
-    public void deleteAll() throws Exception {
-
-        try {
-             dao.deleteAll();
-            Integer second = dao.count();
-            assertTrue("count > 0 : " + second, second == 0);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void insertCategory() throws Exception {
-        Category cat = new Category("r", "pour le test");
-        try {
-            Long nb = dao.insert(cat);
-            assertTrue("An error occured on insertion : " + nb, nb != -1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void findCategoryByName() throws Exception {
-        Category expected = new Category("test", "pour le test");
-        Category notExpected = new Category("test2", "pour le test");
-        try {
-            Category cat = dao.findByName("test");
-            assertEquals(expected, cat);
-            assertNotEquals(notExpected, cat);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void stage2_previousInsertIsFetchable() {
+        Element elt = realm.where(Element.class).equalTo("name", "cheval").findFirst();
+        assertNotNull(elt);
+        assertEquals("cheval", elt.getName());
     }
 
 

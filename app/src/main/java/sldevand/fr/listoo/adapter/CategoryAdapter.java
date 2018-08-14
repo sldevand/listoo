@@ -44,7 +44,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     public interface OnCategoryChoosedListener {
-        void onCategoryChoosed(Integer position);
+        void onCategoryChoosed(String name);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,9 +55,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             super(v);
 
             v.setOnClickListener((view) -> {
-                Integer id = mDataset.get(getAdapterPosition()).getId();
+                Category cat = mDataset.get(getAdapterPosition());
+                String name = cat.getName();
                 if (null != onCategoryChoosedListener) {
-                    onCategoryChoosedListener.onCategoryChoosed(id);
+                    onCategoryChoosedListener.onCategoryChoosed(name);
                 }
             });
 

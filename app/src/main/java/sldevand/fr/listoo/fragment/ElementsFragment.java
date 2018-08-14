@@ -11,14 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import sldevand.fr.listoo.R;
-import sldevand.fr.listoo.adapter.CategoryAdapter;
 import sldevand.fr.listoo.adapter.ElementAdapter;
 import sldevand.fr.listoo.model.Element;
 
-public class ElementsFragment extends Fragment{
+public class ElementsFragment extends Fragment {
     private static final String TAG = "ElementsFragment";
     private static final String ELEMENTS_LIST_PARAM = "Elements";
     private ArrayList<Element> mElementsList;
@@ -31,7 +29,7 @@ public class ElementsFragment extends Fragment{
     public static ElementsFragment newInstance(ArrayList<Element> elements) {
         ElementsFragment fragment = new ElementsFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ELEMENTS_LIST_PARAM,  elements);
+        args.putSerializable(ELEMENTS_LIST_PARAM, elements);
         fragment.setArguments(args);
 
         return fragment;
@@ -40,7 +38,7 @@ public class ElementsFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if ( null != this.getArguments()) {
+        if (null != this.getArguments()) {
             mElementsList = (ArrayList<Element>) this.getArguments().getSerializable(ELEMENTS_LIST_PARAM);
         }
     }
@@ -49,7 +47,7 @@ public class ElementsFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v= inflater.inflate(R.layout.fragment_elements, container, false);
+        View v = inflater.inflate(R.layout.fragment_elements, container, false);
         RecyclerView mRecyclerView = v.findViewById(R.id.elements_recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -58,8 +56,8 @@ public class ElementsFragment extends Fragment{
 
         mAdapter.setOnElementChoosedListener(new ElementAdapter.OnElementChoosedListener() {
             @Override
-            public void onChoosed(Integer position) {
-                mListener.onElementSelected(position);
+            public void onChoosed(String name) {
+                mListener.onElementSelected(name);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -87,6 +85,6 @@ public class ElementsFragment extends Fragment{
 
 
     public interface OnElementSelectionListener {
-        void onElementSelected(Integer id);
+        void onElementSelected(String name);
     }
 }
