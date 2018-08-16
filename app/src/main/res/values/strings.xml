@@ -8,4 +8,10 @@
     <string name="elt_not_found">Element not found</string>
     <string name="elt_list_not_found">List of elements not found</string>
     <string name="cat_list_not_found">List of categories not found</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="form_add_title">Add a category</string>
+    <string name="preview">preview</string>
 </resources>

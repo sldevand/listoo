@@ -2,6 +2,7 @@ package sldevand.fr.listoo;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -53,5 +54,11 @@ public class CategoryDaoTest {
         assertEquals("cheval", elt.getName());
     }
 
-
+    @AfterClass
+    public static void tearDown(){
+        realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.commitTransaction();
+    }
 }

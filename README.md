@@ -2,6 +2,7 @@
 
 **listoo** is an all purpose list with categories Android App 
 
+
 ## Serve
 You can clone this repository and create an Android project to build on your device.
 ```
@@ -16,6 +17,7 @@ test src/
 ## Built With
 
 * [Android Studio](https://developer.android.com/studio/) - The Android framework used
+* [Realm](https://realm.io/) - For the internal database
 
 ## Author
 

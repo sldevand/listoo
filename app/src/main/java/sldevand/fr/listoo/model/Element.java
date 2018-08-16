@@ -11,6 +11,8 @@ public class Element extends RealmObject implements Serializable {
     private String name;
     private String description;
     private Category category;
+    private String uri;
+
 
     public Element() {
         super();
@@ -25,6 +27,11 @@ public class Element extends RealmObject implements Serializable {
     public Element(String name, Category category, String description) {
         this(name, category);
         this.description = description;
+    }
+
+    public Element(String name, Category category, String description,String uri) {
+        this(name, category,description);
+        this.uri = uri;
     }
 
     public String getName() {

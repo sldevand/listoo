@@ -1,5 +1,7 @@
 package sldevand.fr.listoo.model;
 
+import android.widget.TextView;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
@@ -10,6 +12,7 @@ public class Category extends RealmObject implements Serializable {
     @PrimaryKey
     private String name;
     private String description;
+    private String uri;
 
     public Category() {
         super();
@@ -23,6 +26,12 @@ public class Category extends RealmObject implements Serializable {
         this(name);
         this.description = description;
     }
+
+    public Category(String name, String description,String uri) {
+        this(name,description);
+        this.uri=uri;
+    }
+
 
     public String getName() {
         return name;
@@ -40,4 +49,11 @@ public class Category extends RealmObject implements Serializable {
         this.description = description;
     }
 
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 }

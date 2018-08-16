@@ -1,12 +1,16 @@
 package sldevand.fr.listoo.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -15,6 +19,7 @@ import sldevand.fr.listoo.model.Category;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
+    private static final String TAG = CategoryAdapter.class.getSimpleName();
     private OnCategoryChoosedListener onCategoryChoosedListener;
     private List<Category> mDataset;
 
@@ -24,6 +29,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     public void setOnCategoryChoosedListener(OnCategoryChoosedListener listener) {
         this.onCategoryChoosedListener = listener;
+    }
+
+    public void addCategory(Category category) {
+        mDataset.add(category);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -67,7 +77,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
 
         protected void setData(int position) {
-            mTextView.setText(mDataset.get(position).getName());
+            Category category = mDataset.get(position);
+            mTextView.setText(category.getName());
+
+            if (null != category.getUri() && !category.getUri().isEmpty()) {
+                loadImage(category.getUri());
+            }
+        }
+
+        private void loadImage(String uri){
+            Picasso.get().load(uri)
+                    .placeholder(android.R.drawable.gallery_thumb)
+                    .error(android.R.drawable.ic_dialog_alert)
+                    .fit()
+                    .centerInside()
+                    .into(mImageView);
         }
     }
 }

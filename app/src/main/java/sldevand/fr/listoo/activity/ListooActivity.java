@@ -1,7 +1,9 @@
 package sldevand.fr.listoo.activity;
 
+import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
@@ -18,6 +20,7 @@ import sldevand.fr.listoo.fragment.DetailFragment;
 import sldevand.fr.listoo.fragment.ElementsFragment;
 import sldevand.fr.listoo.model.Category;
 import sldevand.fr.listoo.model.Element;
+import sldevand.fr.listoo.util.PermissionsTool;
 import sldevand.fr.listoo.util.Tools;
 
 
@@ -31,13 +34,38 @@ public class ListooActivity extends AppCompatActivity implements CategoriesFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listoo);
+        //Permissions
+        List<String> perms = new ArrayList<>();
+        perms.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        PermissionsTool.requestPermissions(this, perms);
+
 
         realm = Realm.getDefaultInstance();
+         mockDataRealm();
 
         if (null != findViewById(R.id.fragment_container)) {
             if (null != savedInstanceState) return;
             initCategoryFragment();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionsTool.permissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        realm.close();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        realm = Realm.getDefaultInstance();
+
     }
 
     @Override
@@ -94,7 +122,6 @@ public class ListooActivity extends AppCompatActivity implements CategoriesFragm
                     .replace(R.id.fragment_container, detailFragment)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     .addToBackStack(null)
-
                     .commit();
         } catch (RealmException e) {
             Tools.longSnackbar(findViewById(android.R.id.content), getString(R.string.elt_not_found));
@@ -108,6 +135,7 @@ public class ListooActivity extends AppCompatActivity implements CategoriesFragm
             getSupportFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
+            realm.close();
             finish();
         }
     }
@@ -116,8 +144,8 @@ public class ListooActivity extends AppCompatActivity implements CategoriesFragm
         try {
             realm.beginTransaction();
             realm.deleteAll();
-            Category java = new Category("Java", "Langage Polyvalent, fortement typé");
-            Category php = new Category("PHP", "Langage Web Back end");
+            Category java = new Category("Java", "Langage Polyvalent, fortement typé", "http://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Java-icon.png");
+            Category php = new Category("PHP", "Langage Web Back end", "https://byterevel.com/wp-content/uploads/2011/07/PHP-icon.jpeg");
 
             Element javaEE = new Element("JavaEE", java, "Pour créer des applications Java dans de grosses infrastructures");
             Element spring = new Element("Spring", java, "Framework Java à la mode en ce moment, facile à prendre en main");

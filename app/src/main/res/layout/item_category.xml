@@ -5,7 +5,8 @@
     android:background="?android:attr/selectableItemBackground"
     android:orientation="horizontal"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:padding="@dimen/item_padding">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/category_image"
